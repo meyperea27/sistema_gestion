@@ -1,8 +1,38 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
+<style>
+    body {
+        background: linear-gradient(135deg, #0d6efd 0%, #0dcaf0 100%);
+        height: 100vh;
+    }
+    .card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+    .card-header {
+        background-color: #0d6efd;
+        color: white;
+        border-top-left-radius: 15px !important;
+        border-top-right-radius: 15px !important;
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+    .btn-primary {
+        background-color: #0d6efd;
+        border: none;
+        width: 100%;
+        padding: 10px;
+        font-size: 1.1rem;
+    }
+    .btn-unknown {
+        /* Placeholder for potential existing button class */
+    }
+</style>
+<div class="container h-100">
+    <div class="row justify-content-center align-items-center h-100">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Login') }}</div>
