@@ -1,65 +1,87 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
     <div class="row">
-        <div class="col-lg-12 margin-tb">
-            <div class="pull-left">
-                <h2>Crear Nuevo Producto</h2>
+        <!-- Sidebar -->
+        @include('partials.admin-sidebar')
+
+        <!-- Main Content -->
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">Crear Nuevo Producto</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <a class="btn btn-secondary" href="{{ route('products.index') }}"> Volver</a>
+                </div>
             </div>
-            <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('products.index') }}"> Volver</a>
-            </div>
-        </div>
+
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <strong>Ups!</strong> Hubo algunos problemas con su entrada.<br><br>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <form action="{{ route('products.store') }}" method="POST">
+                @csrf
+
+                 <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group mb-3">
+                            <strong>Nombre:</strong>
+                            <input type="text" name="nombre" class="form-control" placeholder="Nombre">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group mb-3">
+                            <strong>Precio:</strong>
+                            <input type="text" name="precio" class="form-control" placeholder="Precio">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group mb-3">
+                            <strong>Stock:</strong>
+                            <input type="number" name="stock" class="form-control" placeholder="Stock">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group mb-3">
+                            <strong>Estado:</strong>
+                            <select class="form-control" name="estado">
+                                <option value="activo">Activo</option>
+                                <option value="inactivo">Inactivo</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group mb-3">
+                            <strong>Categoría:</strong>
+                            <select class="form-control" name="category_id">
+                                <option value="">Seleccione Categoría</option>
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}">{{ $category->nombre }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                            <button type="submit" class="btn btn-primary">Enviar</button>
+                    </div>
+                </div>
+
+            </form>
+        </main>
     </div>
-
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <strong>Ups!</strong> Hubo algunos problemas con su entrada.<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
-    <form action="{{ route('products.store') }}" method="POST">
-        @csrf
-
-         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
-                    <strong>Nombre:</strong>
-                    <input type="text" name="nombre" class="form-control" placeholder="Nombre">
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
-                    <strong>Precio:</strong>
-                    <input type="text" name="precio" class="form-control" placeholder="Precio">
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
-                    <strong>Stock:</strong>
-                    <input type="number" name="stock" class="form-control" placeholder="Stock">
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
-                    <strong>Estado:</strong>
-                    <select class="form-control" name="estado">
-                        <option value="activo">Activo</option>
-                        <option value="inactivo">Inactivo</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                    <button type="submit" class="btn btn-primary">Enviar</button>
-            </div>
-        </div>
-
-    </form>
 </div>
+
+@push('scripts')
+<script src="https://unpkg.com/feather-icons"></script>
+<script>
+    feather.replace()
+</script>
+@endpush
 @endsection

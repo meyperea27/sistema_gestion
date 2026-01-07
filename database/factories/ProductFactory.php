@@ -21,6 +21,7 @@ class ProductFactory extends Factory
             'precio' => $this->faker->randomFloat(2, 10, 1000),
             'stock' => $this->faker->numberBetween(1, 100),
             'estado' => $this->faker->randomElement(['activo', 'inactivo']),
+            'category_id' => \App\Models\Category::inRandomOrder()->first()->id ?? \App\Models\Category::factory(),
         ];
     }
 }

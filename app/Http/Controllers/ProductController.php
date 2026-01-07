@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Models\Product;
 
+use App\Models\Category;
+
 class ProductController extends Controller
 {
     /**
@@ -22,7 +24,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('products.create');
+        $categories = Category::all();
+        return view('products.create', compact('categories'));
     }
 
     /**
@@ -35,6 +38,7 @@ class ProductController extends Controller
             'precio' => 'required|numeric',
             'stock' => 'required|integer',
             'estado' => 'required',
+            'category_id' => 'nullable|exists:categories,id',
         ]);
 
         Product::create($request->all());
@@ -58,7 +62,8 @@ class ProductController extends Controller
     public function edit(string $id)
     {
         $product = Product::findOrFail($id);
-        return view('products.edit', compact('product'));
+        $categories = Category::all();
+        return view('products.edit', compact('product', 'categories'));
     }
 
     /**
@@ -71,6 +76,7 @@ class ProductController extends Controller
             'precio' => 'required|numeric',
             'stock' => 'required|integer',
             'estado' => 'required',
+            'category_id' => 'nullable|exists:categories,id',
         ]);
 
         $product = Product::findOrFail($id);
